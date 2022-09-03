@@ -31,3 +31,4 @@ jobs:
         CF_IMAGE: twinsnes/cf-rmit-app:${{ github.run_number }}
         CF_GIT_BRANCH: 'main'
         CF_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        CF_CONTAINER_REGISTRY_INTEGRATION: 'dockerhub'

@@ -23,12 +23,25 @@ jobs:
     #     sarif_file: snyk.sarif
     - name: Publish Docker image
       run: docker push twinsnes/cf-rmit-app:${{ github.run_number }}
-    - name: report image to Codefresh
-      uses: codefresh-io/codefresh-report-image@latest
-      with:
-        CF_RUNTIME_NAME: 'codefresh-hosted'
-        CF_API_KEY: ${{ secrets.CF_TOKEN}}
-        CF_IMAGE: twinsnes/cf-rmit-app:${{ github.run_number }}
-        CF_GIT_BRANCH: 'main'
-        CF_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        CF_CONTAINER_REGISTRY_INTEGRATION: 'dockerhub'
+    # - name: report image to Codefresh
+    #   uses: codefresh-io/codefresh-report-image@latest
+    #   with:
+    #     CF_RUNTIME_NAME: 'codefresh-hosted'
+    #     CF_API_KEY: ${{ secrets.CF_TOKEN}}
+    #     CF_IMAGE: twinsnes/cf-rmit-app:${{ github.run_number }}
+    #     CF_GIT_BRANCH: 'main'
+    #     CF_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    #     CF_CONTAINER_REGISTRY_INTEGRATION: 'dockerhub'
+    - name: Setup Kustomize
+      uses: imranismail/setup-kustomize@v1
+    - name: update manifests
+      run: |
+        cd manifests
+        kustomize edit set image twinsnes/cf-rmit-app=twinsnes/cf-rmit-app:${{ github.run_number }}
+    - name: Commit report
+    run: |
+      git config --global user.name 'GH Action'
+      git config --global user.email 'gh-action@users.noreply.github.com'
+      git add manifests
+      git commit -m "Updated Image in Manifest"
+      git push

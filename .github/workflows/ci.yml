@@ -23,3 +23,11 @@ jobs:
     #     sarif_file: snyk.sarif
     - name: Publish Docker image
       run: docker push twinsnes/cf-rmit-app:${{ github.run_number }}
+    - name: report image to Codefresh
+      uses: codefresh-io/codefresh-report-image@latest
+      with:
+        CF_RUNTIME_NAME: 'codefresh-hosted'
+        CF_API_KEY: ${{ secrets.CF_TOKEN}}
+        CF_IMAGE: twinsnes/cf-rmit-app:${{ github.run_number }}
+        CF_GIT_BRANCH: 'main'
+        CF_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

@@ -4,4 +4,4 @@ namePrefix: kustomize-
 
 resources:
 - deployment.yaml
-#- guestbook-ui-svc.yaml
+- service.yaml

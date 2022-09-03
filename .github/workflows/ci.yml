@@ -39,9 +39,9 @@ jobs:
         cd manifests
         kustomize edit set image twinsnes/cf-rmit-app=twinsnes/cf-rmit-app:${{ github.run_number }}
     - name: Commit report
-    run: |
-      git config --global user.name 'GH Action'
-      git config --global user.email 'gh-action@users.noreply.github.com'
-      git add manifests
-      git commit -m "Updated Image in Manifest"
-      git push
+      run: |
+        git config --global user.name 'GH Action'
+        git config --global user.email 'gh-action@users.noreply.github.com'
+        git add manifests
+        git commit -m "Updated Image in Manifest"
+        git push

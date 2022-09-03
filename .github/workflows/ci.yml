@@ -1,7 +1,7 @@
 name: Continuous Integration
 on: push
 jobs:
-  snyk:
+  ci:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -13,7 +13,7 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         image: your/image-to-test
-        args: --file=Dockerfile
+        args: --file=app/Dockerfile
     - name: Upload result to GitHub Code Scanning 
       if: failure()
       uses: github/codeql-action/upload-sarif@v2

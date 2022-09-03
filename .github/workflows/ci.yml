@@ -41,7 +41,7 @@ jobs:
       uses: imranismail/setup-kustomize@v1
     - name: update manifests
       run: |
-        cd manifests
+        cd manifests/overlay/test
         kustomize edit set image twinsnes/cf-rmit-app=twinsnes/cf-rmit-app:${{ github.run_number }}
     - name: Commit report
       run: |

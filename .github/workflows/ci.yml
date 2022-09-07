@@ -10,40 +10,39 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+
     - name: Docker login
       run: docker login -u twinsnes -p ${{ secrets.DOCKER_HUB_TOKEN }}
+
     - name: Build a Docker image
       run: docker build -t twinsnes/cf-rmit-app:${{ github.run_number }} ./app
-    # - name: Run Snyk to check Docker image for vulnerabilities
-    #   uses: snyk/actions/docker@master
-    #   env:
-    #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-    #   with:
-    #     image: twinsnes/cf-rmit-app:${{ github.run_number }}
-    #     args: --file=app/Dockerfile
-    # - name: Upload result to GitHub Code Scanning 
-    #   if: failure()
-    #   uses: github/codeql-action/upload-sarif@v2
-    #   with:
-    #     sarif_file: snyk.sarif
+
+    - name: Run Snyk to check Docker image for vulnerabilities
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        image: twinsnes/cf-rmit-app:${{ github.run_number }}
+        args: --file=app/Dockerfile
+
+    - name: Upload result to GitHub Code Scanning 
+      if: failure()
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: snyk.sarif
+
     - name: Publish Docker image
       run: docker push twinsnes/cf-rmit-app:${{ github.run_number }}
-    # - name: report image to Codefresh
-    #   uses: codefresh-io/codefresh-report-image@latest
-    #   with:
-    #     CF_RUNTIME_NAME: 'codefresh-hosted'
-    #     CF_API_KEY: ${{ secrets.CF_TOKEN}}
-    #     CF_IMAGE: twinsnes/cf-rmit-app:${{ github.run_number }}
-    #     CF_GIT_BRANCH: 'main'
-    #     CF_GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-    #     CF_CONTAINER_REGISTRY_INTEGRATION: 'dockerhub'
+
     - name: Setup Kustomize
       uses: imranismail/setup-kustomize@v1
+
     - name: update manifests
       run: |
         cd manifests/overlay/test
         kustomize edit set image twinsnes/cf-rmit-app=twinsnes/cf-rmit-app:${{ github.run_number }}
-    - name: Commit report
+
+    - name: Update test environment
       run: |
         git config --global user.name 'GH Action'
         git config --global user.email 'gh-action@users.noreply.github.com'

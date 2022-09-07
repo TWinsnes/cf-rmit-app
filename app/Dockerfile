@@ -1,11 +1,14 @@
 # syntax=docker/dockerfile:1
 # Builder image
-FROM golang:1.16-alpine AS build
+FROM golang:1.19-alpine AS build
 WORKDIR /app
+
+RUN apk add gcc musl-dev
 
 COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
+RUN go install golang.org/x/lint/golint@latest
 
 COPY main.go ./
 

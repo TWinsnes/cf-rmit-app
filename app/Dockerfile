@@ -19,7 +19,7 @@ RUN go test
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
 # Image
-FROM alpine:3.12.1
+FROM alpine:3
 WORKDIR /app
 
 COPY assets ./assets

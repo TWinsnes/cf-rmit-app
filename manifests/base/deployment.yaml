@@ -33,7 +33,7 @@ spec:
                 - --tries=1
                 - --timeout=4
                 - --spider
-                - http://localhost:8080
+                - http://localhost:8081
             timeoutSeconds: 5
           readinessProbe:
             exec:
@@ -43,7 +43,7 @@ spec:
                 - --tries=1
                 - --timeout=4
                 - --spider
-                - http://localhost:8080
+                - http://localhost:8081
             timeoutSeconds: 5
           resources:
             limits:

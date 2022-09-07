@@ -25,26 +25,26 @@ spec:
           ports:
             - name: http
               containerPort: 8080
-          # livenessProbe:
-          #   exec:
-          #     command:
-          #       - wget
-          #       - --quiet
-          #       - --tries=1
-          #       - --timeout=4
-          #       - --spider
-          #       - http://localhost:8080
-          #   timeoutSeconds: 5
-          # readinessProbe:
-          #   exec:
-          #     command:
-          #       - wget
-          #       - --quiet
-          #       - --tries=1
-          #       - --timeout=4
-          #       - --spider
-          #       - http://localhost:8080
-          #   timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - wget
+                - --quiet
+                - --tries=1
+                - --timeout=4
+                - --spider
+                - http://localhost:8080
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+                - wget
+                - --quiet
+                - --tries=1
+                - --timeout=4
+                - --spider
+                - http://localhost:8080
+            timeoutSeconds: 5
           resources:
             limits:
               memory: "128Mi"

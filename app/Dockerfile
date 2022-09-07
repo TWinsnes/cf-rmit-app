@@ -8,6 +8,11 @@ COPY go.sum ./
 RUN go mod download
 
 COPY main.go ./
+
+Run golint -set_exit_status
+
+RUN go test
+
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
 # Image

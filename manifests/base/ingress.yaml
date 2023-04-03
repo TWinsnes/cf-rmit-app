@@ -4,11 +4,7 @@ kind: Ingress
 metadata:
   name: rmit-app-ingress
   annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '2'
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/success-codes: 200
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+    kubernetes.io/ingress.class: azure/application-gateway
 spec:
   ingressClassName: alb
   defaultBackend:

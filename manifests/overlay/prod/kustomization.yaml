@@ -7,4 +7,4 @@ resources:
 images:
 - name: twinsnes/cf-rmit-app
   newName: twinsnes/cf-rmit-app
-  newTag: "23"
+  newTag: "26"

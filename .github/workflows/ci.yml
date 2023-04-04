@@ -34,18 +34,18 @@ jobs:
     - name: Publish Docker image
       run: docker push twinsnes/cf-rmit-app:${{ github.run_number }}
 
-    # - name: Setup Kustomize
-    #   uses: imranismail/setup-kustomize@v1
+    - name: Setup Kustomize
+      uses: imranismail/setup-kustomize@v1
 
-    # - name: update manifests
-    #   run: |
-    #     cd manifests/overlay/test
-    #     kustomize edit set image twinsnes/cf-rmit-app=twinsnes/cf-rmit-app:${{ github.run_number }}
+    - name: update manifests
+      run: |
+        cd manifests/overlay/test
+        kustomize edit set image twinsnes/cf-rmit-app=twinsnes/cf-rmit-app:${{ github.run_number }}
 
-    # - name: Commit manifest changes
-    #   run: |
-    #     git config --global user.name 'GH Action'
-    #     git config --global user.email 'gh-action@users.noreply.github.com'
-    #     git add manifests
-    #     git commit -m "Updated Image in Manifest"
-    #     git push
+    - name: Commit manifest changes
+      run: |
+        git config --global user.name 'GH Action'
+        git config --global user.email 'gh-action@users.noreply.github.com'
+        git add manifests
+        git commit -m "Updated Image in Manifest"
+        git push
